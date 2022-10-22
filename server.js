@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
   app.use('/breads', breadsController)
 
 // MIDDLEWARE
+app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
