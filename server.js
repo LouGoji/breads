@@ -1,4 +1,5 @@
 // DEPENDENCIES
+const methodOverride = require('method-override')
 const express = require('express')
 
 // CONFIGURATION
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
   app.use('/breads', breadsController)
 
 // MIDDLEWARE
+app.use(methodOverride('_method'))
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 app.set('views', __dirname + '/views')
