@@ -1,7 +1,8 @@
 const React = require('react')
+const baker = require('../controllers/bakers_controller')
 const Default = require('./layouts/Default')
 
-function New () {
+function New ({bakers}) {
     return (
       <Default>
           <div className="backButton">
@@ -23,6 +24,11 @@ function New () {
             id="image"/>
             <label htmlFor="baker">Baker</label>
 <select name="baker" id="baker">
+  {baker.map((baker) => {
+    return(
+      <option value={baker.id} key={baker.id}>{baker.name}</option>
+    )
+  })}
   <option value="Rachel">Rachel</option>
   <option value="Monica">Monica</option>
   <option value="Joey">Joey</option>
