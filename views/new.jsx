@@ -24,7 +24,7 @@ function New ({bakers}) {
             id="image"/>
             <label htmlFor="baker">Baker</label>
 <select name="baker" id="baker">
-  {baker.map((baker) => {
+  {bakers.map((baker) => {
     return(
       <option value={baker.id} key={baker.id}>{baker.name}</option>
     )
