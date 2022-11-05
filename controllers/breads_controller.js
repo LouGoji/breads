@@ -2,23 +2,19 @@ const express = require('express')
 const breads = express.Router()
 const Bread = require('../models/bread.js')
 const Baker = require('../models/baker.js')
+const breadSeedData = require('../models/seed.js')
 
-// Index:
-breads.get('/', (req, res) => {
-  Baker.find()
-    .then(foundBakers => {
-      Bread.find()
-      .then(foundBreads => {
-          res.render('index', {
-              breads: foundBreads,
-              bakers: foundBakers,
-              title: 'Index Page'
-          })
-      })
-    })
+// INDEX
+breads.get('/', async (req, res) => {
+  const foundBakers = await Baker.find().lean()
+  const foundBreads = await Bread.find().limit(2).lean()
+  console.log(foundBreads)
+  res.render('index', {
+    breads: foundBreads,
+    bakers: foundBakers,
+    title: 'Index Page'
+  })
 })
-
-
 
 // NEW
 breads.get('/new', (req, res) => {
@@ -26,39 +22,8 @@ breads.get('/new', (req, res) => {
   .then(foundBakers => {
   res.render('new', {
     bakers: foundBakers
+    })
   })
-})
-
-})
-
-// EDIT
-breads.get('/:id/edit', (req, res) => {
-  Baker.find()
-    .then(foundBakers => {
-        Bread.findById(req.params.id)
-          .then(foundBread => {
-            res.render('edit', {
-                bread: foundBread, 
-                bakers: foundBakers 
-            })
-          })
-    })
-})
-
-
-
-// UPDATE
-breads.put('/:id', (req, res) => {
-  if(req.body.hasGluten === 'on'){
-    req.body.hasGluten = true
-  } else {
-    req.body.hasGluten = false
-  }
-  Bread.findByIdAndUpdate(req.params.id, req.body, { new: true }) 
-    .then(updatedBread => {
-      console.log(updatedBread) 
-      res.redirect(`/breads/${req.params.id}`) 
-    })
 })
 
 // SHOW
@@ -75,8 +40,33 @@ breads.get('/:id', (req, res) => {
       })
 })
 
+// EDIT
+breads.get('/:id/edit', (req, res) => {
+  Baker.find()
+    .then(foundBakers => {
+        Bread.findById(req.params.id)
+          .then(foundBread => {
+            res.render('edit', {
+                bread: foundBread, 
+                bakers: foundBakers 
+            })
+          })
+    })
+})
 
-
+// UPDATE
+breads.put('/:id', (req, res) => {
+  if(req.body.hasGluten === 'on'){
+    req.body.hasGluten = true
+  } else {
+    req.body.hasGluten = false
+  }
+  Bread.findByIdAndUpdate(req.params.id, req.body, { new: true }) 
+    .then(updatedBread => {
+      console.log(updatedBread) 
+      res.redirect(`/breads/${req.params.id}`) 
+    })
+})
 
 // CREATE
 breads.post('/', (req, res) => {
@@ -92,8 +82,6 @@ breads.post('/', (req, res) => {
   res.redirect('/breads')
 })
 
-
-
 // DELETE
 breads.delete('/:id', (req, res) => {
   Bread.findByIdAndDelete(req.params.id) 
@@ -102,16 +90,12 @@ breads.delete('/:id', (req, res) => {
     })
 })
 
-  
-// INDEX
-breads.get('/', (req, res) => {
-  res.render('Index',
-    {
-      breads: Bread
-    }
-  )
-// res.send(Bread)
+// SEED ROUTE 
+breads.get('/data/seed', (req, res) => {
+  Bread.insertMany(breadSeedData)
+    .then(createdBreads => {
+      res.redirect('/breads')
+    })
 })
-
 
 module.exports = breads

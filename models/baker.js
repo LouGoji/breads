@@ -1,7 +1,7 @@
 // dependencies
 const mongoose = require('mongoose')
-const { Schema } = mongoose
 const Bread = require('./bread')
+const { Schema } = mongoose
 
 // schema
 const bakerSchema = new Schema({
@@ -15,9 +15,7 @@ const bakerSchema = new Schema({
         required: true
     },
     bio: String
-    
 }, {toJSON: {virtuals: true}})
-
 
 // Virtuals:
 bakerSchema.virtual('breads', {
@@ -33,8 +31,6 @@ bakerSchema.post('findOneAndDelete', function() {
             console.log(deleteStatus)
         })
   })
-  
-
 
 // model and export
 const Baker = mongoose.model('Baker', bakerSchema)

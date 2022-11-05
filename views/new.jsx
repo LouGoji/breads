@@ -5,9 +5,6 @@ const Default = require('./layouts/Default')
 function New ({bakers}) {
     return (
       <Default>
-          <div className="backButton">
-  <a href="/breads"><button>Go back to the index</button></a>
-</div>
         <h2>Add a new bread</h2>
         <form action="/breads" method="POST">
           <label htmlFor="name">Name</label>
@@ -23,13 +20,13 @@ function New ({bakers}) {
             name="image"
             id="image"/>
             <label htmlFor="baker">Baker</label>
-<select name="baker" id="baker">
-  {bakers.map((baker) => {
-    return(
-      <option value={baker.id} key={baker.id}>{baker.name}</option>
-    )
-  })}
-</select>
+            <select name="baker" id="baker">
+              {bakers.map((baker) => {
+                return(
+                  <option value={baker.id} key={baker.id}>{baker.name}</option>
+                )
+              })}
+            </select>
           <label htmlFor="hasGluten">Has Gluten?</label>
           <input
             type="checkbox"

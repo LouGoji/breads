@@ -21,14 +21,14 @@ function Edit ({bread, bakers}) {
             id="image"
             defaultValue={bread.image}
           />
-                      <label htmlFor="baker">Baker</label>
-<select name="baker" id="baker" defaultValue={bread.baker}>
-  {bakers.map((baker) => {
-    return(
-      <option value={baker.id} key={baker.id}>{baker.name}</option>
-    )
-  })}
-</select>
+          <label htmlFor="baker">Baker</label>
+          <select name="baker" id="baker" defaultValue={bread.baker}>
+            {bakers.map((baker) => {
+              return(
+                <option value={baker.id} key={baker.id}>{baker.name}</option>
+              )
+            })}
+          </select>
           <label htmlFor="hasGluten">Has Gluten?</label>
           <input
             type="checkbox"
@@ -42,6 +42,5 @@ function Edit ({bread, bakers}) {
       </Default>
     )
 }
-
 
 module.exports = Edit
